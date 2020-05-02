@@ -1,8 +1,6 @@
 import * as Knex from 'knex';
 
-import type { UserCreds } from '../../types';
-
-// import { UserCreds } from '../../types';
+import { UserCreds } from '../../types';
 
 const data: UserCreds[] = [
   {
