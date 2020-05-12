@@ -1,10 +1,12 @@
 import * as Dotenv from 'dotenv';
 
-import server from './server';
-
 Dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+// eslint-disable-next-line import/first
+import server from './server';
+
+
+const { PORT } = process.env;
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
