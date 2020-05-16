@@ -9,3 +9,6 @@ export interface UserCreds {
 export interface ValidatedCredsRequest extends Express.Request {
   userCreds: Readonly<UserCreds>,
 }
+
+export type Role = 'admin'
+  | 'user';

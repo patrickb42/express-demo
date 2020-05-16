@@ -1,3 +1,2 @@
 export { filterObject } from './filterObject';
-
-export default {};
+export { generateToken } from './generateToken';
