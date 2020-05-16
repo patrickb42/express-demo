@@ -26,7 +26,8 @@ const register = async (req: ValidatedCredsRequest, res: Express.Response) => {
       },
     });
 
-    return res.status(201).json(generateToken({ id: result2.id, username: result2.username }));
+    const token = generateToken({ id: result2.id, username: result2.username });
+    return res.status(201).json({ token });
   } catch (err) {
     return res.status(500).json({
       error: err.message,
@@ -35,8 +36,20 @@ const register = async (req: ValidatedCredsRequest, res: Express.Response) => {
   }
 };
 
-const login = () => {
-  //
+const login = async (req: ValidatedCredsRequest, res: Express.Response) => {
+  const { username, password } = req.userCreds;
+
+  try {
+    const [result] = await UserCreds.get({ username });
+    return (result !== undefined && Bcrypt.compareSync(password, result.password))
+      ? res.status(200).json({ token: generateToken({ id: result.id, username: result.username }) })
+      : res.status(403).json({ message: 'invalid credentials' });
+  } catch (error) {
+    return res.status(500).json({
+      error: 'error logging in',
+      mesage: error.message,
+    });
+  }
 };
 
 router.post('/register', validateCreds, register);
